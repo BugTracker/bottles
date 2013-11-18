@@ -1,4 +1,4 @@
-package com.bottles.security;
+package com.bottle.security;
 
 import java.io.IOException;
 
