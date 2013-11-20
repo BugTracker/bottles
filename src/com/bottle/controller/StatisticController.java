@@ -1,36 +1,44 @@
 package com.bottle.controller;
 
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 
+import com.bottle.ejb.StatisticEJB;
+import com.bottle.ejb.UserStat;
+
 @ManagedBean(name = "statisticController")
+@RequestScoped
 public class StatisticController {
-	private CartesianChartModel statisticChart;
+	@EJB
+	private StatisticEJB statisticEJB;
 	
+	private CartesianChartModel basicStatChart;
+	private List <UserStat> userStatList;
+
 	public StatisticController(){
-		createStatisticChart();
+
 	}
 	
-	public CartesianChartModel getStatisticChart(){
-		return statisticChart;
+	public CartesianChartModel getBasicStatChart(){
+		return basicStatChart;
 	}
 	
+	@PostConstruct
 	private void createStatisticChart(){
-		statisticChart = new CartesianChartModel();
-		
+		userStatList = statisticEJB.getTotalStat();
+		basicStatChart = new CartesianChartModel();
 		ChartSeries bottles = new ChartSeries();
-		bottles.setLabel("TEST");
+		bottles.setLabel("Number of Carried Bottles");
+		for (int i = 0; i < userStatList.size(); i++)
+			bottles.set(userStatList.get(i).getName(), userStatList.get(i).getResult());
 		
-		bottles.set("Aleksey", 28);
-		bottles.set("Jenya", 1);
-		bottles.set("Emil", 1);
-		bottles.set("Arly", 3);
-		bottles.set("Zarlyk", 3);
-		bottles.set("Almaz", 4);
-		bottles.set("Nurdin", 5);
-		
-		statisticChart.addSeries(bottles);
+		basicStatChart.addSeries(bottles);
 	}
 }
