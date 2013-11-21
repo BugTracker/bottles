@@ -5,8 +5,11 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 import com.bottle.ejb.BottleEJB;
 import com.bottle.entity.BottleEntity;
@@ -24,14 +27,20 @@ public class BottleController {
 	
 	private BottleEntity bottle = new BottleEntity();
 	
-	public  String doAddNewBottles(){
+	public  void doAddNewBottles(){
 		bottleEJB.addNewBottles(quantity, date);
 		newUniqueBottlesCodeList = bottleEJB.getNewBottlesCodeList();
-		return "listnumber.xhtml";
 	}
 	
-	public void doCarryBottle(){
-		bottleEJB.carryBottle(unumber);
+	public void doCarryBottle(ActionEvent actionEvent){
+		if(bottleEJB.carryBottle(unumber))
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+																			 "INFO:",
+																			 "The bottle has been succesfully carried"));
+		else
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+					 "WARN:",
+					 "There's no bottle with such code"));
 	}
 	
 	public BottleEntity getBottle() {
@@ -68,9 +77,5 @@ public class BottleController {
 
 	public List<String> getNewUniqueBottlesCodeList() {
 		return newUniqueBottlesCodeList;
-	}
-
-	public void setNewUniqueBottlesCodeList(List<String> newUniqueBottlesCodeList) {
-		this.newUniqueBottlesCodeList = newUniqueBottlesCodeList;
 	}
 }
