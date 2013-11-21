@@ -25,16 +25,17 @@
 				<h:outputText value="NITC 2013"/>
 			</p:layoutUnit>
 			<p:layoutUnit position="center">
-				<h:form>
+				<h:form id="form1">
 					<p:tabMenu activeIndex="0">
 						<p:menuitem value="Carry bottle" url="/user/index.xhtml"/>
 						<p:menuitem value="View Statistics" url="/user/statistic.xhtml"/>
 					</p:tabMenu>
+					<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
 					<h:panelGrid columns="2" cellpading="10">
 						<h:outputText value="Unique number of bottle: "/>
 						<h:inputText value="#{bottleController.unumber}"/>
 					</h:panelGrid>
-					<h:commandButton value="Carry bottle" action="#{bottleController.doCarryBottle}"/>
+					<p:commandButton value="Carry bottle" actionListener="#{bottleController.doCarryBottle}"/>
 				</h:form>
 			</p:layoutUnit>
 		</p:layout>

@@ -55,8 +55,10 @@ public class BottleEJB {
 	
 	public void addNewBottles(String num, Date date){
 		int number = Integer.parseInt(num);
+		genUnumberList.clear();
 		
 		for (int i = 0; i < number; i++){
+				
 				String newUnumber;
 				
 				do{
@@ -73,15 +75,17 @@ public class BottleEJB {
 		}
 	}
 	
-	public void carryBottle(String unum){
+	public boolean carryBottle(String unum){
 		Integer userId;
 		Principal callerPrincipal;
 		String callerName;
+		boolean status = false;
 		
 		callerPrincipal = ctx.getCallerPrincipal();
 		callerName = callerPrincipal.getName();
 		
 		if (checkBottle(unum)){
+			status = true;
 			Query query = em.createNamedQuery("getUserId");
 			query.setParameter(1, callerName);
 			userId = (Integer)query.getSingleResult();
@@ -93,6 +97,8 @@ public class BottleEJB {
 			ce.setUsrId(userId);
 			em.persist(ce);
 		}
+		
+		return status;
 	}
 	
 	public List <String> getNewBottlesCodeList(){
