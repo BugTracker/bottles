@@ -69,7 +69,7 @@
   </security-constraint>
   <login-config>
     <auth-method>FORM</auth-method>
-    <realm-name>newJdbcRealm</realm-name>
+    <realm-name>jdbcRealm</realm-name>
   </login-config>
   <context-param>
     <param-name>javax.faces.PROJECT_STAGE</param-name>
