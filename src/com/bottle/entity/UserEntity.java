@@ -1,19 +1,25 @@
 package com.bottle.entity;
 
+import java.security.NoSuchAlgorithmException;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import com.bottle.security.EncryptPassword;
+
 @Entity
 @NamedQueries({
-	@NamedQuery(name = "getUserId", query = "SELECT u.usrId FROM UserEntity u WHERE u.usrUserName = ?1")
+	@NamedQuery(name = "findAllUsers", query = "SELECT u FROM UserEntity u")
 })
 @Table(name = "t_user")
 public class UserEntity {
-	@Id
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "usr_id")
 	private Integer usrId;
 	
@@ -67,6 +73,10 @@ public class UserEntity {
 	}
 
 	public void setUsrPassword(String usrPassword) {
-		this.usrPassword = usrPassword;
+		try {
+			this.usrPassword = EncryptPassword.encryptPassword(usrPassword);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -1,15 +1,16 @@
 package com.bottle.ejb;
 
-import javax.annotation.security.RolesAllowed;
-import javax.ejb.Stateful;
+import java.util.List;
+
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import com.bottle.entity.UserEntity;
 
-@Stateful
-@RolesAllowed("admin")
-public class UserEJB implements UserDao{
+@Stateless
+public class AdminEJB {
 	@PersistenceContext
 	private EntityManager entityManager;
 	
@@ -22,15 +23,14 @@ public class UserEJB implements UserDao{
 		}
 	}
 	
-	private void saveNewUser(UserEntity ue){
+	public void saveNewUser(UserEntity ue){
 		entityManager.persist(ue);
 	}
 	
 	private void updateUser(UserEntity ue){
 		entityManager.merge(ue);
 	}
-	
-	@RolesAllowed({"admin", "user"})
+
 	public UserEntity getUser(Long ueId){
 		UserEntity ue;
 		ue = entityManager.find(UserEntity.class, ueId);
@@ -39,5 +39,10 @@ public class UserEJB implements UserDao{
 	
 	public void deleteUser(UserEntity ue){
 		entityManager.remove(ue);
+	}
+	
+	public List <UserEntity> getUserList(){
+		Query query = entityManager.createNamedQuery("findAllUsers");
+		return query.getResultList();
 	}
 }

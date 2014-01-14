@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:f="http://java.sun.com/jsf/core">
+	<ui:composition template="/template.xhtml">
+		<ui:define name="header">
+			<div align="left">
+				<h:outputLabel>itBottles</h:outputLabel>
+				<h:form id="right">
+					<p:commandButton value="Sign Out" action="#{loginController.logout}"/>
+				</h:form>
+			</div>
+		</ui:define>
+		<ui:define name="body">
+			<h:form>
+				<p:tabMenu activeIndex="1">
+					<p:menuitem value="New User" url="/admin/index.xhtml"/>
+					<p:menuitem value="Users" url="/admin/userlist.xhtml"/>
+				</p:tabMenu>
+				
+				<p:dataTable var="user" value="#{adminController.userList}">
+					<p:column headerText="First Name">
+						<h:outputText value="#{user.usrFname}"/>
+					</p:column>
+					<p:column headerText="Last Name">
+						<h:outputText value="#{user.usrLname}"/>
+					</p:column>
+					<p:column headerText="Username">
+						<h:outputText value="#{user.usrUserName}"/>
+					</p:column>
+					<p:column>
+						<p:commandButton id="selectButton" update=":form:display" oncomplete="PF('userDialog').show()" icon="ui-icon-search"
+										 title="View">
+							<f:setPropertyActionListener value="#{user}" target="#{adminController.selectedUser}"/>
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+				
+				<p:dialog header="User Detail" widgetVar="userDialog" resizable="false" modal="true">
+					<h:panelGrid id="display" columns="2">
+						<h:outputText value="First Name: "/>
+						<h:outputText value="#{adminController.selectedUser.usrFname}"/>
+						
+						<h:outputText value="Last Name: "/>
+						<h:outputText value="#{adminController.selectedUser.usrLname}"/>
+						
+						<h:outputText value="Username: "/>
+						<h:outputText value="#{adminController.selectedUser.usrUserName}"/>
+					</h:panelGrid>
+				</p:dialog>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</html>

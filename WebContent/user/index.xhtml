@@ -3,41 +3,30 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:h="http://java.sun.com/jsf/html"
 	  xmlns:f="http://java.sun.com/jsf/core"
-	  xmlns:p="http://primefaces.org/ui">
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>itBottles</title>
-	<style>
-		.right
-		{
-			float:right;
-			width:60px;
-		}
-	</style>
-</h:head>
-<h:body>
-		<p:layout fullPage="true">
-			<p:layoutUnit position="north" size="50">
-				<h:outputText value="itBottles"/>
-				<a href="${request.contextPath}/logoutservlet">Logout</a>
-			</p:layoutUnit>
-			<p:layoutUnit position="south" size="50">
-				<h:outputText value="NITC 2013"/>
-			</p:layoutUnit>
-			<p:layoutUnit position="center">
-				<h:form id="form1">
-					<p:tabMenu activeIndex="0">
-						<p:menuitem value="Carry bottle" url="/user/index.xhtml"/>
-						<p:menuitem value="View Statistics" url="/user/statistic.xhtml"/>
-					</p:tabMenu>
-					<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
-					<h:panelGrid columns="2" cellpading="10">
-						<h:outputText value="Unique number of bottle: "/>
-						<h:inputText value="#{bottleController.unumber}"/>
-					</h:panelGrid>
-					<p:commandButton value="Carry bottle" actionListener="#{bottleController.doCarryBottle}"/>
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://java.sun.com/jsf/facelets">
+	<ui:composition template="/template.xhtml">
+		<ui:define name="header">
+			<div align="left">
+				<h:outputLabel>itBottles</h:outputLabel>
+				<h:form id="right">
+					<p:commandButton value="Sign Out" action="#{loginController.logout}"/>
 				</h:form>
-			</p:layoutUnit>
-		</p:layout>
-</h:body>
+			</div>
+		</ui:define>
+		<ui:define name="body">
+			<h:form>
+				<p:tabMenu activeIndex="0">
+					<p:menuitem value="Carry bottle" url="/user/index.xhtml"/>
+					<p:menuitem value="View Statistics" url="/user/statistic.xhtml"/>
+				</p:tabMenu>
+				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
+				<h:panelGrid columns="2" cellpading="10">
+					<h:outputText value="Unique number of bottle: "/>
+					<h:inputText value="#{bottleController.unumber}"/>
+				</h:panelGrid>
+				<p:commandButton value="Carry bottle" actionListener="#{bottleController.doCarryBottle}"/>
+			</h:form>	
+		</ui:define>
+	</ui:composition>
 </html>

@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:h="http://java.sun.com/jsf/html">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Insert title here</title>
-</head>
-<h:body>
-	<h1>Hello, Admin!</h1>
-	<a href="${request.contextPath}/logoutservlet">Logout</a>
-	<h:link outcome="/index" value="Back to Homepage"/>
-</h:body>
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui">
+	<ui:composition template="/template.xhtml">
+		<ui:define name="header">
+			<div align="left">
+				<h:outputLabel>itBottles</h:outputLabel>
+				<h:form id="right">
+					<p:commandButton value="Sign Out" action="#{loginController.logout}"/>
+				</h:form>
+			</div>
+		</ui:define>
+		<ui:define name="body">
+			<h:form>
+				<p:tabMenu activeIndex="0">
+					<p:menuitem value="New User" url="/admin/index.xhtml"/>
+					<p:menuitem value="Users" url="/admin/userlist.xhtml"/>
+				</p:tabMenu>
+				<h:panelGrid columns="2" cellpading="10">
+					<h:outputText value="First Name: "/>
+					<h:inputText value="#{adminController.user.usrFname}"/>
+					
+					<h:outputText value="Last Name: "/>
+					<h:inputText value="#{adminController.user.usrLname}"/>
+					
+					<h:outputText value="Username: "/>
+					<h:inputText value="#{adminController.user.usrUserName}"/>
+					
+					<h:outputText value="Password: "/>
+					<h:inputText value="#{adminController.user.usrPassword}"/>
+				</h:panelGrid>
+				<p:commandButton value="Save User" action="#{adminController.doCreateNewUser}"/>
+			</h:form>
+		</ui:define>
+	</ui:composition>
 </html>

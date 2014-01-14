@@ -7,15 +7,17 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+
+import org.primefaces.context.RequestContext;
 
 import com.bottle.ejb.BottleEJB;
 import com.bottle.entity.BottleEntity;
 
 @ManagedBean(name = "bottleController")
-@RequestScoped
+@ViewScoped
 public class BottleController {
 	@EJB
 	private BottleEJB bottleEJB;
@@ -27,7 +29,7 @@ public class BottleController {
 	
 	private BottleEntity bottle = new BottleEntity();
 	
-	public  void doAddNewBottles(){
+	public void doAddNewBatch(){
 		bottleEJB.addNewBottles(quantity, date);
 		newUniqueBottlesCodeList = bottleEJB.getNewBottlesCodeList();
 	}

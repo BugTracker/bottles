@@ -3,29 +3,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:h="http://java.sun.com/jsf/html"
 	  xmlns:f="http://java.sun.com/jsf/core"
-	  xmlns:p="http://primefaces.org/ui">
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>itBottles</title>
-	<style>
-		.right
-		{
-			float:right;
-			width:60px;
-		}
-	</style>
-</h:head>
-<h:body>
-		<p:layout fullPage="true">
-			<p:layoutUnit position="north" size="50">
-				<h:outputText value="itBottles"/>
-				<h:link outcome="login.xhtml" value="Sign in" styleClass="right"/>
-			</p:layoutUnit>
-			<p:layoutUnit position="south" size="50">
-				<h:outputText value="NITC 2013"/>
-			</p:layoutUnit>
-			<p:layoutUnit position="center">
-			</p:layoutUnit>
-		</p:layout>
-</h:body>
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://java.sun.com/jsf/facelets">
+	<ui:composition template="template.xhtml">
+		<ui:define name="header">
+			<div align="left">
+				<h:outputLabel>itBottles</h:outputLabel>
+				<h:form id="right">
+					<p:commandButton value="Sign In" action="login.xhtml?faces-redirect=true"/>
+				</h:form>
+			</div>
+		</ui:define>
+	</ui:composition>
 </html>

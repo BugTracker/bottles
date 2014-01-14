@@ -5,50 +5,40 @@
 	  xmlns:f="http://java.sun.com/jsf/core"
 	  xmlns:p="http://primefaces.org/ui"
 	  xmlns:ui="http://java.sun.com/jsf/facelets">
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>itBottles</title>
-	<style>
-		.right
-		{
-			float:right;
-			width:60px;
-		}
-	</style>
-</h:head>
-<h:body>
-		<p:layout fullPage="true">
-			<p:layoutUnit position="north" size="50">
-				<h:outputText value="itBottles"/>
-				<a href="${request.contextPath}/logoutservlet">Logout</a>
-			</p:layoutUnit>
-			<p:layoutUnit position="south" size="50">
-				<h:outputText value="NITC 2013"/>
-			</p:layoutUnit>
-			<p:layoutUnit position="center">
-				<h:form>
-					<p:tabMenu activeIndex="0">
-						<p:menuitem value="New income" url="/manager/index.xhtml"/>
-					</p:tabMenu>
-					<h:panelGrid columns="2" cellpading="10">
-						<h:outputText value="Date of income: "/>
-						<p:calendar value="#{bottleController.date}"/>
-					
-						<h:outputLabel value="Quantity of bottles: "/>
-						<h:inputText value="#{bottleController.quantity}"/>
-							
-						<p:commandButton value="Add a bottle" action="#{bottleController.doAddNewBottles}" update="genlist"/>
-					</h:panelGrid>
-					<h:dataTable id="genlist" value="#{bottleController.newUniqueBottlesCodeList}" var="cl">
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Codes"/>
-						</f:facet>
-						<h:outputText value="#{cl}"/>
-					</h:column>
-				</h:dataTable>
+	<ui:composition template="/template.xhtml">
+		<ui:define name="header">
+			<div align="left">
+				<h:outputLabel>itBottles</h:outputLabel>
+				<h:form id="right">
+					<p:commandButton value="Sign Out" action="#{loginController.logout}"/>
 				</h:form>
-			</p:layoutUnit>
-		</p:layout>
-</h:body>
+			</div>
+		</ui:define>
+		<ui:define name="body">
+			<h:form>
+				<p:tabMenu activeIndex="0">
+					<p:menuitem value="Add new income" url="/manager/index.xhtml"/>
+				</p:tabMenu>
+				<h:panelGrid columns="2" cellpading="10">
+					<h:outputLabel value="Date of income: "/>
+					<p:calendar value="#{bottleController.date}"/>
+								
+					<h:outputLabel value="Quantity of bottles: "/>
+					<h:inputText value="#{bottleController.quantity}"/>
+								
+					<h:commandButton id="submit" value="Add" onclick="jsf.ajax.request(this, event, 
+							{execute: 'codes', render: 'codelist'}); return false;"
+							actionListener="#{bottleController.doAddNewBatch}"/>
+				</h:panelGrid>
+			</h:form>
+			<h:dataTable id="codelist" value="#{bottleController.newUniqueBottlesCodeList}" var="cl">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Codes"/>
+					</f:facet>
+					<h:outputText value="#{cl}"/>
+				</h:column>
+			</h:dataTable>
+		</ui:define>
+	</ui:composition>
 </html>
