@@ -15,7 +15,8 @@ import com.bottle.security.EncryptPassword;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name = "findAllUsers", query = "SELECT u FROM UserEntity u")
+	@NamedQuery(name = "findAllUsers", query = "SELECT u FROM UserEntity u"),
+	@NamedQuery(name = "getUserId", query = "SELECT u.usrId FROM UserEntity u WHERE u.usrUserName = ?1")
 })
 @Table(name = "t_user")
 public class UserEntity {
