@@ -27,6 +27,7 @@ public class LoginBean {
 			if (request.isUserInRole("user"))
 				outcome = "user";
 			
+			System.out.println(outcome);
 			return outcome;
 		} catch(ServletException e) {
 			return "failure";
