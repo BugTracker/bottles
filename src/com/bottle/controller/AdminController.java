@@ -24,6 +24,10 @@ public class AdminController {
 		adminEJB.saveNewUser(user);
 	}
 	
+	public void doDeleteUser(){
+		adminEJB.deleteUser(selectedUser);
+	}
+	
 	public void setUser(UserEntity user){
 		this.user = user;
 	}
@@ -32,16 +36,16 @@ public class AdminController {
 		return user;
 	}
 	
-	public List <UserEntity> getUserList(){
-		userList = adminEJB.getUserList();
-		return userList;
+	public void setSelectedUser(UserEntity selectedUser){
+		this.selectedUser = selectedUser;
 	}
 	
 	public UserEntity getSelectedUser(){
 		return selectedUser;
 	}
-	
-	public void setSelectedUser(UserEntity selectedUser){
-		this.selectedUser = selectedUser;
+
+	public List <UserEntity> getUserList(){
+		userList = adminEJB.getUserList();
+		return userList;
 	}
 }

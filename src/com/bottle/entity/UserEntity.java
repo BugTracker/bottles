@@ -15,14 +15,14 @@ import com.bottle.security.EncryptPassword;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name = "findAllUsers", query = "SELECT u FROM UserEntity u"),
-	@NamedQuery(name = "getUserId", query = "SELECT u.usrId FROM UserEntity u WHERE u.usrUserName = ?1")
+	@NamedQuery(name = "selectAllUsers", query = "SELECT u FROM UserEntity u"),
+	@NamedQuery(name = "selectUserIdByUsername", query = "SELECT u.usrId FROM UserEntity u WHERE u.usrUserName = ?1")
 })
 @Table(name = "t_user")
 public class UserEntity {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "usr_id")
-	private Integer usrId;
+	protected Long usrId;
 	
 	@Column(name = "usr_fname")
 	private String usrFname;
@@ -37,11 +37,11 @@ public class UserEntity {
 	private String usrPassword;
 
 	//Getters and Setters
-	public Integer getUsrId() {
+	public Long getUsrId() {
 		return usrId;
 	}
 
-	public void setUsrId(Integer usrId) {
+	public void setUsrId(Long usrId) {
 		this.usrId = usrId;
 	}
 

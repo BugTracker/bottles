@@ -37,12 +37,17 @@ public class AdminEJB {
 		return ue;
 	}
 	
+	//raw code (need review)
 	public void deleteUser(UserEntity ue){
-		entityManager.remove(ue);
+		Query query = entityManager.createNamedQuery("selectUserIdByUsername");
+		query.setParameter(1, ue.getUsrUserName());
+		Long id = (Long)query.getSingleResult();
+		UserEntity nue = entityManager.find(UserEntity.class, id);
+		entityManager.remove(nue);
 	}
 	
 	public List <UserEntity> getUserList(){
-		Query query = entityManager.createNamedQuery("findAllUsers");
+		Query query = entityManager.createNamedQuery("selectAllUsers");
 		return query.getResultList();
 	}
 }
